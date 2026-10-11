@@ -41,16 +41,15 @@ A portal for creating and managing NFC / QR digital business cards.
 
 | Name | Where to find it |
 |---|---|
-| `FIREBASE_PROJECT_ID` | `project_id` in the downloaded .json |
-| `FIREBASE_CLIENT_EMAIL` | `client_email` in the .json |
-| `FIREBASE_PRIVATE_KEY` | `private_key` in the .json. Paste the whole value including `-----BEGIN PRIVATE KEY-----` … `-----END PRIVATE KEY-----` |
+| `FIREBASE_SERVICE_ACCOUNT` | open the downloaded .json file in Notepad, copy **everything** (`{` to `}`), paste as the value |
 | `FIREBASE_WEB_API_KEY` | `apiKey` from step A4 |
 | `FIREBASE_AUTH_DOMAIN` | `authDomain` from step A4 (e.g. `mtq-digital-cards.firebaseapp.com`) |
 | `FIREBASE_WEB_APP_ID` | `appId` from step A4 |
 | `APP_URL` | your site address without a trailing slash, e.g. `https://mtq-cards.vercel.app` |
 
-4. Click **Deploy**. When it's live, make sure that exact domain is in Firebase's **Authorized domains** (step A3).
-5. Open `https://<your-domain>/admin/login`, click **Continue with Google**, and pick one of the two approved accounts.
+4. Click **Deploy**. Then open `https://<your-domain>/api/health`. It should say `"ok": true`. If not, it names the setting that's missing or wrong (it never shows secret values). After changing any variable, **redeploy**: Vercel only picks up new values on a new deployment.
+5.  When it's live, make sure that exact domain is in Firebase's **Authorized domains** (step A3).
+6. Open `https://<your-domain>/admin/login`, click **Continue with Google**, and pick one of the two approved accounts.
 
 ## Part C: Use it
 
