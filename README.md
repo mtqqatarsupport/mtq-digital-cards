@@ -36,16 +36,15 @@ A portal for creating and managing NFC / QR digital business cards.
    git remote add origin https://github.com/<you>/mtq-digital-cards.git
    git push -u origin main
    ```
-2. Go to [vercel.com](https://vercel.com) → **Add New… → Project** → import the repo.
+2. Go to [vercel.com](https://vercel.com) → **Add New… → Project** → import the repo. Deploy from **GitHub**, not drag-and-drop: Vercel Drop deployments never update when the code changes.
 3. Before deploying, open **Environment Variables** and add:
 
 | Name | Where to find it |
 |---|---|
 | `FIREBASE_SERVICE_ACCOUNT` | open the downloaded .json file in Notepad, copy **everything** (`{` to `}`), paste as the value |
-| `FIREBASE_WEB_API_KEY` | `apiKey` from step A4 |
-| `FIREBASE_AUTH_DOMAIN` | `authDomain` from step A4 (e.g. `mtq-digital-cards.firebaseapp.com`) |
-| `FIREBASE_WEB_APP_ID` | `appId` from step A4 |
-| `APP_URL` | your site address without a trailing slash, e.g. `https://mtq-cards.vercel.app` |
+| `APP_URL` *(optional)* | only needed for a custom domain, e.g. `https://cards.mechatronics.com.qa`. Defaults to the Vercel address |
+
+The public web-app settings for the Google button (project **mtqdigitalcard**) are built into `src/lib/firebase-web.ts`. `FIREBASE_WEB_API_KEY`, `FIREBASE_AUTH_DOMAIN` and `FIREBASE_WEB_APP_ID` are only needed to point at a different Firebase project.
 
 4. Click **Deploy**. Then open `https://<your-domain>/api/health`. It should say `"ok": true`. If not, it names the setting that's missing or wrong (it never shows secret values). After changing any variable, **redeploy**: Vercel only picks up new values on a new deployment.
 5.  When it's live, make sure that exact domain is in Firebase's **Authorized domains** (step A3).
