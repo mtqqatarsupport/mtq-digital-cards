@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { SESSION_COOKIE } from "@/lib/admins";
+import { firebaseWebConfig } from "@/lib/firebase-web";
 
 // 1) Per-request nonce Content-Security-Policy on every page.
 // 2) Quick gate for /admin: no session cookie → login page. The cookie itself
@@ -18,7 +19,7 @@ export function middleware(req: NextRequest) {
 
   const nonce = btoa(crypto.randomUUID());
   const dev = process.env.NODE_ENV !== "production";
-  const authDomain = (process.env.FIREBASE_AUTH_DOMAIN ?? "").replace(/[^a-zA-Z0-9.-]/g, "");
+  const authDomain = firebaseWebConfig().authDomain.replace(/[^a-zA-Z0-9.-]/g, "");
   // Google sign-in (Firebase Auth) needs to talk to Google — only on the login page.
   const google = isLogin
     ? {

@@ -1,4 +1,5 @@
 import { firestore, serviceAccount } from "@/lib/firebase-admin";
+import { firebaseWebConfig } from "@/lib/firebase-web";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,8 @@ export async function GET() {
         `error: ${msg.slice(0, 160)}`;
     }
   }
-  const ok = credentials === "ok" && database === "ok" && env.FIREBASE_WEB_API_KEY && env.FIREBASE_AUTH_DOMAIN && env.FIREBASE_WEB_APP_ID;
-  return Response.json({ ok, env, credentials, database }, { status: ok ? 200 : 503, headers: { "Cache-Control": "no-store" } });
+  const web = firebaseWebConfig();
+  const googleSignIn = web.apiKey && web.authDomain && web.appId ? `ok (${web.authDomain})` : "missing web app settings";
+  const ok = credentials === "ok" && database === "ok" && googleSignIn.startsWith("ok");
+  return Response.json({ ok, credentials, database, googleSignIn, env }, { status: ok ? 200 : 503, headers: { "Cache-Control": "no-store" } });
 }

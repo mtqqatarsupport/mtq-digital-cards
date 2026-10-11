@@ -1,19 +1,14 @@
 import { redirect } from "next/navigation";
 import { getAdmin } from "@/lib/auth";
 import { getSettings, logoSrc } from "@/lib/site";
-import { firebaseProjectId } from "@/lib/firebase-admin";
+import { firebaseWebConfig } from "@/lib/firebase-web";
 import { GoogleSignIn, type FirebaseWebConfig } from "./GoogleSignIn";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Sign in — Digital Cards" };
 
 function webConfig(): FirebaseWebConfig | null {
-  const c = {
-    apiKey: process.env.FIREBASE_WEB_API_KEY ?? "",
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN ?? "",
-    projectId: process.env.FIREBASE_PROJECT_ID || firebaseProjectId(),
-    appId: process.env.FIREBASE_WEB_APP_ID ?? "",
-  };
+  const c = firebaseWebConfig();
   return c.apiKey && c.authDomain && c.projectId && c.appId ? c : null;
 }
 
